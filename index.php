@@ -18,6 +18,13 @@
 
   <div class="container">
     <div class="row">
+      <?php
+        if (isset($_SESSION['errors'])) {
+          foreach ($_SESSION['errors'] as $error) {
+            echo "<p>" . $error . "</p>";
+          }
+        }
+      ?>
       <div class="col-md-6">
         <form action="process.php" method="post">
           <h2>Register</h2>

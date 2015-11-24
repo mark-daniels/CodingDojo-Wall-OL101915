@@ -49,6 +49,7 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <form action="posting_process.php" method="post">
+          <input type="hidden" name="purpose" value="message">
           <label>Post a message</label>
           <textarea class="form-control" rows="3" name="message_content"></textarea>
           <button type="submit" class="btn btn-default">Post</button>
@@ -60,8 +61,8 @@
     <div class="row">
       <div class="col-md-12">
         <?php
-          $get_all_messages_query = "SELECT * FROM messages JOIN users ON messages.user_id = users.id";
-          $messages = fetch_all($get_all_messages_query);
+          $get_all_messages_and_comments_query = "SELECT * FROM messages JOIN users ON messages.user_id = users.id LEFT JOIN comments ON messages.id = comments.message_id";
+          $messages = fetch_all($get_all_messages_and_comments_query);
           foreach ($messages as $message) {
         ?>
           <div class="panel panel-default">
@@ -70,7 +71,29 @@
             </div>
             <div class="panel-body">
               <?= $message['message_content'] ?>
+
+              <?php
+                foreach ($messages as $message) {
+                   
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Panel title</h3>
+                  </div>
+                  <div class="panel-body">
+                    Panel content
+                  </div>
+                </div>
+                }
+              ?>
             </div>
+
+            <form action="posting_process.php" method="post">
+              <input type="hidden" name="purpose" value="comment">
+              <input type="hidden" name="message_id" value="<?= $message['id'] ?>">
+              <label>Post a comment</label>
+              <textarea class="form-control" rows="3" name="comment_content"></textarea>
+              <button type="submit" class="btn btn-default">Comment</button>
+            </form>
           </div>
         <?php
           }

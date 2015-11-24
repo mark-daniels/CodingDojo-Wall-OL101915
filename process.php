@@ -8,11 +8,16 @@
   } else if (isset($_POST['purpose']) && $_POST['purpose'] == 'login') {
     $user = login_user($_POST);
     if (count($user) > 0) {
+      $_SESSION['id'] = $user['id'];
+      $_SESSION['first_name'] = $user['first_name'];
       header("Location: home.php");
     } else {
       $_SESSION['errors'] = array("Wrong email or password");
       header("Location: index.php");
     }
+  } elseif (isset($_POST['purpose']) && $_POST['purpose'] == 'signout') {
+    session_destroy();
+    header("Location: index.php");
   }
 
 

@@ -23,6 +23,7 @@
           foreach ($_SESSION['errors'] as $error) {
             echo "<p>" . $error . "</p>";
           }
+          unset($_SESSION['errors']);
         }
       ?>
       <div class="col-md-6">
